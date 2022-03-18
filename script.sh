@@ -13,8 +13,11 @@ echo "Redirect $1 -> $2";
 echo "confirm (y): "
 read confirm
 if [[ $confirm == "Y" || $confirm == "y" ]]; then
-    mkdir -p /var/www/$1/public_html    &&
-    chmod -R 755 /var/www &&
+    mkdir -p /var/www/$1/public_html  &&
+
+    ### log files datetime
+    echo "$(date) ran with" $1 "--->" $2 >> errors.log &&
+    echo "$(date) ran with" $1 "--->" $2 >> output.log &&
 
     ### write the file
 
@@ -22,13 +25,15 @@ if [[ $confirm == "Y" || $confirm == "y" ]]; then
 
     cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/$1.conf &&
 
-    bash ed-script.sh $1 /etc/apache2/sites-available/$1.conf > /dev/null &&
+    bash ed-script.sh $1 /etc/apache2/sites-available/$1.conf 2>> errors.log 1>> output.log &&
 
-    a2dissite 000-default.conf >> syslog.txt &&
+    a2dissite -q 000-default.conf 1>> output.log 2>> errors.log &&
 
-    a2ensite $1.conf >> syslog.txt &&
+    a2ensite -q $1.conf 1>> output.log 2>> errors.log &&
 
-    systemctl restart apache2 >> syslog.txt
+    systemctl restart apache2 1>> output.log 2>> errors.log || 
+    
+    echo "error! errors.log, output.log"
 
 else
     echo "aborting"
