@@ -8,7 +8,7 @@ automates the process of hosting multiple sites in a server.
 As is, the script acts like a re-direct server where if you run
 
 
-```sudo ./script.sh sumanchapai.com.np sarangkot.com```
+```sudo ./script.sh sumanchapai.com.np https://sarangkot.com```
 
 It will redirect users going to <https://sumanchapai.com.np> to
 <https://sarangkot.com>.  Be aware though that this redirect is done from a
