@@ -17,7 +17,7 @@ being re-directed.
 
 
 If you're looking for the just setting up multi-site server and not redirect,
-just modify the `index.html` in theh `/var/www/domain.com/public_html/` of your
+just modify the `index.html` in the `/var/www/domain.com/public_html/` of your
 server to put the desired HTML.
 
 **!This script uses a bit hacky methods in writing ed-scripts. So don't rely on

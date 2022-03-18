@@ -22,13 +22,13 @@ if [[ $confirm == "Y" || $confirm == "y" ]]; then
 
     cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/$1.conf &&
 
-    bash ed-script.sh $1 /etc/apache2/sites-available/$1.conf &&
+    bash ed-script.sh $1 /etc/apache2/sites-available/$1.conf > /dev/null &&
 
-    a2dissite 000-default.conf &&
+    a2dissite 000-default.conf >> syslog.txt &&
 
-    a2ensite $1.conf &&
+    a2ensite $1.conf >> syslog.txt &&
 
-    systemctl restart apache2
+    systemctl restart apache2 >> syslog.txt
 
 else
     echo "aborting"
